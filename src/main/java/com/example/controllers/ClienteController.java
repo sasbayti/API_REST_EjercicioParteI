@@ -299,7 +299,7 @@ public class ClienteController {
         String headerValue = "attachment; filename=\"" + resource.getFilename() + "\"";
 
         return ResponseEntity.ok()
-        .contentType(MediaType.parseMediaType(contentType)) //Hay que especificarle el tipo contenttype, viene de arriva
+        .contentType(MediaType.parseMediaType(contentType)) //Hay que especificarle el tipo contenttype, viene de arriba
         .header(HttpHeaders.CONTENT_DISPOSITION, headerValue) // En la cabecera te digo que te mando un archivo como atachment
         .body(resource);
 
