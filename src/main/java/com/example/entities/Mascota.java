@@ -61,8 +61,8 @@ public class Mascota implements Serializable {
     private LocalDate fechaNacimiento;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    //@JsonIgnore
-    @JsonManagedReference
+    @JsonIgnore
+   //@JsonManagedReference
     // Igual que Jsonignore tiene que ver con las referencias
     private Cliente cliente;
 

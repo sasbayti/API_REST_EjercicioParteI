@@ -11,18 +11,18 @@ import org.springframework.stereotype.Repository;
 
 import com.example.entities.Cliente;
 
-
+@Repository
 public interface ClienteDao extends JpaRepository<Cliente, Long> {
    
 
-   @Query(value = "select c from Cliente c left join c.hotel left join c.mascotas")
+   @Query(value = "select c from Cliente c left join fetch c.hotel left join fetch c.mascotas")
     public List<Cliente> findAll(Sort sort);
     
-    @Query(value = "select c from Cliente c left join c.hotel left join c.mascotas", 
-    countQuery = "select count(c) from Cliente c left join c.hotel left join c.mascotas")
+    @Query(value = "select c from Cliente c left join fetch c.hotel left join fetch c.mascotas",
+    countQuery = "select count(c) from Cliente c")
     public Page<Cliente> findAll(Pageable pageable);
 
-    @Query(value = "select c from Cliente c left join c.hotel left join c.mascotas where c.id = :id") //Consulta parametro con nombre
+    @Query(value = "select c from Cliente c JOIN FETCH c.hotel JOIN FETCH c.mascotas where c.id = :id") //Consulta parametro con nombre
     public Cliente findById(long id);
  
 }

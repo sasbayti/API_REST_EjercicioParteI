@@ -54,11 +54,10 @@ public class Cliente implements Serializable {
     private String imagenCliente;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "cliente")
-    @JsonIgnore
     private List<Mascota> mascotas;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-     @JsonManagedReference
+   //  @JsonManagedReference
     private Hotel hotel;
    
 }

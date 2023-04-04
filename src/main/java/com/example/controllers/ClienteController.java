@@ -34,8 +34,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.entities.Cliente;
 import com.example.entities.FileUploadUtil;
+import com.example.entities.Mascota;
 import com.example.model.FileUploadResponse;
 import com.example.services.ClienteService;
+import com.example.services.MascotaService;
 import com.example.utilities.FileDownloadUtil;
 
 import jakarta.validation.Valid;
@@ -54,6 +56,8 @@ public class ClienteController {
 
     @Autowired
     private FileUploadUtil fileUploadUtil;
+    @Autowired
+    private MascotaService mascotaService;
 
 
     @GetMapping
@@ -170,12 +174,20 @@ public class ClienteController {
     }
         Cliente clienteDB = clienteService.save(cliente);
         try {
-            if (clienteDB != null) { // Aqui estoy haciendo la validacion de si se ha guardado
+            if (clienteDB != null) {
+                List<Mascota> mascotas =cliente.getMascotas();
+                    if(mascotas != null){
+                        for(Mascota mascota: mascotas){
+                            mascota.setCliente(clienteDB);
+                            mascotaService.save(mascota);
+                        }
+                    }
+                // Aqui estoy haciendo la validacion de si se ha guardado
                 String mensaje = "El cliente se ha creado correctamente";
                 responseAsMap.put("mensaje", mensaje);
                 responseAsMap.put("cliente", clienteDB);
                 responseEntity = new ResponseEntity<Map<String, Object>>(responseAsMap, HttpStatus.CREATED);
-
+                
             } else {
                 String mensaje = "El cliente no se ha creado";
                 responseAsMap.put("mensaje", mensaje);
